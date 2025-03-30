@@ -1,9 +1,12 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem "rails", "~> 8.0.2"
-gem "pg", "~> 1.1"
-gem "puma", ">= 5.0"
+gem 'pg', '~> 1.1'
+gem 'puma', '>= 5.0'
+gem 'rails', '~> 8.0.2'
 
 gem 'vite_rails', '~> 3.0', '>= 3.0.17'
 
-gem "tzinfo-data", platforms: %i[ windows jruby ]
+gem 'rubocop', require: false
+gem 'rubocop-performance', require: false
+gem 'rubocop-rails', require: false
+gem 'tzinfo-data', platforms: %i[windows jruby]
