@@ -85,6 +85,11 @@ GEM
     drb (2.2.1)
     dry-cli (1.2.0)
     erubi (1.13.1)
+    factory_bot (6.5.1)
+      activesupport (>= 6.1.0)
+    factory_bot_rails (6.4.4)
+      factory_bot (~> 6.5)
+      railties (>= 5.0.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.7)
@@ -228,6 +233,9 @@ GEM
     rubocop-ast (1.43.0)
       parser (>= 3.3.7.2)
       prism (~> 1.4)
+    rubocop-factory_bot (2.27.1)
+      lint_roller (~> 1.1)
+      rubocop (~> 1.72, >= 1.72.1)
     rubocop-performance (1.24.0)
       lint_roller (~> 1.1)
       rubocop (>= 1.72.1, < 2.0)
@@ -238,6 +246,9 @@ GEM
       rack (>= 1.1)
       rubocop (>= 1.72.1, < 2.0)
       rubocop-ast (>= 1.38.0, < 2.0)
+    rubocop-rspec (3.5.0)
+      lint_roller (~> 1.1)
+      rubocop (~> 1.72, >= 1.72.1)
     ruby-progressbar (1.13.0)
     securerandom (0.4.1)
     stringio (3.1.6)
@@ -278,13 +289,16 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  factory_bot_rails
   pg (~> 1.1)
   puma (>= 5.0)
   rails (~> 8.0.2)
   rspec-rails
   rubocop
+  rubocop-factory_bot
   rubocop-performance
   rubocop-rails
+  rubocop-rspec
   tzinfo-data
   vite_rails (~> 3.0, >= 3.0.17)
 

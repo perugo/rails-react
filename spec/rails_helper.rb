@@ -68,8 +68,8 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 
-  # TODO: FactoryBot. を省略するため
-  # config.include FactoryBot::Syntax::Methods
+  # FactoryBot. を省略するため
+  config.include FactoryBot::Syntax::Methods
 
   config.include ActiveSupport::Testing::TimeHelpers
 end
