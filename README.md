@@ -7,6 +7,15 @@ Things you may want to cover:
 
 * Ruby version
 
+実行手順
+- bundle install 
+- yarn install
+- create database
+- migrationを実行
+
+### viteでCSS/js処理を行っています
+- 別ターミナルで bin/vite dev を実行
+
 * System dependencies
 
 * Configuration
