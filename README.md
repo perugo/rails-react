@@ -14,6 +14,7 @@ Things you may want to cover:
 - migrationを実行
 
 ### viteでCSS/js処理を行っています
+- bundle exec rails s
 - 別ターミナルで bin/vite dev を実行
 
 * System dependencies
