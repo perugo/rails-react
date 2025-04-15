@@ -4,6 +4,4 @@
 
 @import "flowbite";
 
-body {
-  background-color: #d0cfcf;
-}
+@import "../stylesheets/application.tailwind.css";
