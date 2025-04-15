@@ -2,7 +2,16 @@
   "private": true,
   "type": "module",
   "devDependencies": {
+    "@tailwindcss/vite": "^4.1.4",
+    "@vitejs/plugin-react": "^4.4.0",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.4",
     "vite": "^5.4.15",
     "vite-plugin-ruby": "^5.1.1"
+  },
+  "dependencies": {
+    "flowbite": "^3.1.2",
+    "flowbite-react": "^0.11.7"
   }
 }
