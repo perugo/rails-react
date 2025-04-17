@@ -5,3 +5,9 @@
 @import "flowbite";
 
 @import "../stylesheets/application.tailwind.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
