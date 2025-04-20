@@ -28,3 +28,5 @@ console.log(
 
 // Example: Import a stylesheet in app/frontend/index.css
 // import '~/index.css'
+
+import "../controllers"; // stimulusを使うために必要
