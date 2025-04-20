@@ -152,18 +152,11 @@
                   <!-- スケジュール枠 -->
                   <div class="flex flex-col" alt="現場毎の複数レコード列">
                     <% 2.times do %>
-
-                    <div class="flex flex-1" style="width: <%= day_cells_width%>;" alt="複数レコード日付枠">
-                      <div class="min-h-[<%= schedule_height %>px] border-b border-[rgb(203.65,203.65,203.65)] flex flex-[1_0_auto]" alt="レコード毎">
-                        <div class="flex flex-[1_0_auto]">
-                          <% dates.length.times do |i| %>
-                          <div class="relative box-border min-w-0 flex flex-[1_0_0]" alt="1セル">
-                            <div class="flex-[1_1_auto] <%= 'border-r' unless i == days_in_month-1 %> border-[rgb(203.65,203.65,203.65)]"></div>
-                          </div>
-                          <% end %>
-                        </div>
+                      <div class="min-h-[<%= schedule_height %>px] last:border-b-0 border-b border-[rgb(203.65,203.65,203.65)] flex flex-1" style="width: <%= day_cells_width%>;" alt="レコード毎">
+                        <% dates.length.times do |i| %>
+                        <div class="flex flex-1 <%= 'border-r' unless i == days_in_month-1 %> border-[rgb(203.65,203.65,203.65)]" alt="1セル"></div>
+                        <% end %>
                       </div>
-                    </div>
                     <% end %>
                   </div>
                 </div>
