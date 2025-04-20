@@ -11,8 +11,8 @@
 <div class="bg-[#F2F5F8]">
   <div class="w-full pt-4">
     <div class="flex flex-row">
-      <div class="flex flex-row mr-4 h-[calc(100vh-16px)]">
-        <div class="p-4 bg-white flex flex-col shadow-md"  style="width: <%= source_panel_width %>px">
+      <div class="flex flex-row mr-4 h-[calc(100vh-16px)]" data-controller="resource-panel">
+        <div class="p-4 bg-white flex flex-col shadow-md transition-width duration-200"  style="width: <%= source_panel_width %>px" data-resource-panel-target="panel">
           <!-- 上部ボタン -->
           <button class="w-full text-indigo-900 font-sm bg-indigo-100 hover:bg-indigo-200 text-sm py-2 rounded mb-2">
             ＋選択中のリソースを配置
@@ -62,7 +62,7 @@
           </div>
         </div>
         <!-- >> ボタン -->
-        <div class="w-8 h-full flex items-start justify-center rounded-tr-md rounded-br-md bg-[#14046c]">
+        <div class="w-8 h-full flex items-start justify-center rounded-tr-md rounded-br-md bg-[#14046c]" data-action="click->resource-panel#toggle">
           <img
             src="/svg/double_arrow_left.svg"
             class="w-[20px] h-[20px] mt-2"
