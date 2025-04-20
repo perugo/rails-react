@@ -1,16 +1,10 @@
-<% table_width_int = 1390 %>
+<%# ==== Parameters ==== %>
 <% genba_cell_width_int = 192 %>
 <% start_date = Date.new(2024, 12, 16) %>
-<% end_date   = Date.new(2025, 1, 17) %>
-<% dates = (start_date..end_date).to_a %>
-<% day_cells_width_int = table_width_int - genba_cell_width_int %>
-<% day_cell_width_int = day_cells_width_int.to_f / dates.length %>
-
+<% end_date   = start_date + 31 %>
+<% dates      = (start_date..end_date).to_a %>
 <% genba_cell_width = "#{genba_cell_width_int}px" %>
-<% day_cells_width = "#{day_cells_width_int}px" %>
-<% day_cell_width  = "#{day_cell_width_int}px" %>
 
-<% table_width = "#{table_width_int}px" %>
 <% date_height = '55px' %>
 <% schedule_height = 60 %>
 
@@ -18,140 +12,98 @@
   <div class="w-full pt-4">
     <div class="flex h-[600px] flex-row">
       <div class="flex flex-col bg-[#14046c] mr-4 text-white rounded-tr-md rounded-br-md">
-        <!-- >> ボタン -->
-        <div class="w-8 h-10 flex items-center justify-center">
-          <<
-        </div>
+        <div class="w-8 h-10 flex items-center justify-center">&lt;&lt;</div>
       </div>
+
       <div class="flex flex-1 flex-col">
+        <!-- ヘッダ操作エリア -->
         <div class="pr-4">
-          <div class="flex flex-row items-center justify-between mb-2">
-            <!-- 左寄せ -->
+          <div class="flex items-center justify-between mb-2">
             <div class="flex items-center space-x-2">
               <button class="text-blue-900">今日</button>
-              <select class="border rounded px-2 py-1">
-                <option>1ヶ月表示</option>
-              </select>
+              <select class="border rounded px-2 py-1"><option>1ヶ月表示</option></select>
             </div>
-
-            <!-- 右寄せ -->
             <div class="flex items-center space-x-3">
-              <!-- チェックボックス -->
-              <label class="flex items-center space-x-1 text-blue-900">
-                <input type="checkbox" checked class="accent-blue-900" />
-                <span>重機</span>
-              </label>
-              <label class="flex items-center space-x-1 text-blue-900">
-                <input type="checkbox" checked class="accent-blue-900" />
-                <span>人員</span>
-              </label>
-              <label class="flex items-center space-x-1 text-blue-900">
-                <input type="checkbox" checked class="accent-blue-900" />
-                <span>機材</span>
-              </label>
-              <label class="flex items-center space-x-1 text-blue-900">
-                <input type="checkbox" class="accent-blue-900" />
-                <span>その他</span>
-              </label>
-
-              <!-- ボタン -->
-              <button class="bg-indigo-100 text-indigo-900 font-medium px-3 py-1 rounded hover:bg-indigo-200">
-                + 配置登録
-              </button>
-              <button class="bg-indigo-100 text-indigo-900 font-medium px-3 py-1 rounded hover:bg-indigo-200">
-                🛠 配置一括編集
-              </button>
+              <% %w(重機 人員 機材 その他).each_with_index do |label, idx| %>
+                <label class="flex items-center space-x-1 text-blue-900">
+                  <input type="checkbox" class="accent-blue-900" <%= 'checked' if idx < 3 %> />
+                  <span><%= label %></span>
+                </label>
+              <% end %>
+              <button class="bg-indigo-100 text-indigo-900 font-medium px-3 py-1 rounded hover:bg-indigo-200">+ 配置登録</button>
+              <button class="bg-indigo-100 text-indigo-900 font-medium px-3 py-1 rounded hover:bg-indigo-200">🛠 配置一括編集</button>
             </div>
           </div>
 
-          <div class="relative z-0 pt-4 pl-4 flex flex-1 flex-col w-full bg-white" alt="日付とレコードを仮に内包">
-            <!-- 本体 -->
-            <div class="flex flex-1 flex-col" alt="日付とレコードを内包">
-              <div class="flex" alt="日付列">
-                
-                <!-- 左固定の枠 -->
-                <div class="flex flex-shrink-0 bg-[rgb(254.65,254.65,254.65)]" style="width: <%= genba_cell_width %>">
-                  <div class="flex-1 border-b border-r border-[rgb(203.65,203.65,203.65)]">
-                  </div>
-                </div>
-
-                <!-- 横スクロールする月・日付枠 -->
-                <div class="w-full">
-                  <!-- 月表示 -->
-                  <% previous_month = nil %>
-                  <% month_day_count = 0 %>
-                  <% month_widths = [] %>
-                  <% dates.each_with_index do |date, index| %>
-                    <% if previous_month.nil? %>
-                      <% previous_month = date.month %>
-                    <% end %>
-
-                    <% if date.month != previous_month %>
-                      <% month_width = day_cell_width_int * month_day_count %>
-                      <% month_widths << { year: date.year, month: previous_month, width: month_width } %>
-                      <% previous_month = date.month %>
-                      <% month_day_count = 0 %>
-                    <% end %>
-
-                    <% month_day_count += 1 %>
-
-                    <% if index == dates.size - 1 %> <%# 最終日だったら %>
-                      <% month_width = day_cell_width_int * month_day_count %>
-                      <% month_widths << { year: date.year, month: previous_month, width: month_width } %>
-                    <% end %>
-                  <% end %>
-
-                  <!-- 月表示DOM描画 -->
-                    <div class="flex box-border flex-[1_0_auto] w-full">
-                    <% month_widths.each_with_index do |mw, i| %>
-                      <% is_last = i == month_widths.size - 1 %>
-                      <% year_month_label = "#{mw[:year]}年#{mw[:month]}月" %>
-                      <div class="box-border border-b <%= is_last ? '' : 'border-r' %> border-[rgb(203.65,203.65,203.65)] text-left text-gray-500 pl-3"
-                          style="width: <%= mw[:width] %>px">
-                        <%= year_month_label %>
-                      </div>
-                    <% end %>
-                  </div>
-                  <!-- 日付枠 -->
-                  <div class="relative flex flex-row bg-[rgb(254.65,254.65,254.65)]" alt="日付枠">
-                    <% dates.each_with_index do |date, i| %>
-                      <div class="flex-1 box-border">
-                        <div class="box-border border-b <%= 'border-r' unless i == dates.size - 1 %> h-[<%= date_height %>] border-[rgb(203.65,203.65,203.65)] flex flex-col items-center justify-center">
-                          
-                          <!-- 曜日 -->
-                          <div class="text-sm text-gray-500 leading-none pb-1">
-                            <%= %w(日 月 火 水 木 金 土)[date.wday] %>
-                          </div>
-                          
-                          <!-- 日付 -->
-                          <div class="text-base font-semibold text-lg leading-none">
-                            <%= date.day %>
-                          </div>
-
-                        </div>
-                      </div>
-                    <% end %>
-                  </div>
-                  <div class="flex-none w-0"></div>
-                </div>
+          <!-- ===== カレンダー本体 ===== -->
+          <div class="relative z-0 pt-4 pl-4 flex flex-1 flex-col w-full bg-white">
+            <!-- ==== 日付ヘッダ ==== -->
+            <div class="flex">
+              <!-- 左固定空セル -->
+              <div class="flex flex-shrink-0" style="width:<%= genba_cell_width %>">
+                <div class="flex-1 border-b border-r border-gray-300"></div>
               </div>
 
-              <div class="flex flex-[1_1_auto]">
-                <div class="flex-shrink-0" style="width:<%= genba_cell_width %>;">
-                  <div class="flex items-center text-gray-700 border-r border-gray-300" style="height:<%= schedule_height * 2 %>px;">
-                    佐賀バルーン駅
-                  </div>
-                </div>
-                <!-- スケジュール枠 -->
-                <div class="flex flex-col" alt="現場毎の複数レコード列">
-                  <% 2.times do %>
-                    <div class="min-h-[<%= schedule_height %>px] last:border-b-0 border-b border-[rgb(203.65,203.65,203.65)] flex flex-1" style="width: <%= day_cells_width%>;" alt="レコード毎">
-                      <% dates.length.times do |i| %>
-                      <div class="flex flex-1 <%= 'border-r' unless i == dates.length - 1 %> border-[rgb(203.65,203.65,203.65)]" alt="1セル"></div>
-                      <% end %>
+              <!-- 横スクロール領域 -->
+              <div class="flex-1 overflow-x-auto">
+                <!-- 月ラベル行 -->
+                <% month_data = [] %>
+                <% prev_month = nil; day_cnt = 0 %>
+                <% dates.each_with_index do |d, idx| %>
+                  <% prev_month ||= d.month %>
+                  <% if d.month != prev_month %>
+                    <% month_data << {year: d.year, month: prev_month, days: day_cnt} %>
+                    <% prev_month = d.month; day_cnt = 0 %>
+                  <% end %>
+                  <% day_cnt += 1 %>
+                  <% month_data << {year: d.year, month: prev_month, days: day_cnt} if idx == dates.size - 1 %>
+                <% end %>
+
+                <div class="flex min-w-full">
+                  <% month_data.each_with_index do |m, i| %>
+                    <div class="pl-3 text-gray-500 border-b border-gray-300 <%= 'border-r' unless i == month_data.size - 1 %>" style="flex:<%= m[:days] %> 0 0; min-width:0;">
+                      <%= "#{m[:year]}年#{m[:month]}月" %>
                     </div>
                   <% end %>
                 </div>
+
+                <!-- 各日セル行 -->
+                <div class="flex min-w-full">
+                  <% dates.each_with_index do |date, i| %>
+                    <%
+                      day_color = case date.wday
+                                  when 0 then 'text-red-500'   # 日曜
+                                  when 6 then 'text-blue-500'  # 土曜
+                                  else      'text-gray-500'   # 平日
+                                  end
+                    %>
+                    <div class="flex-1 border-b border-gray-300 <%= 'border-r' unless i == dates.size - 1 %>">
+                      <div class="flex flex-col items-center justify-center h-[<%= date_height %>]">
+                        <div class="text-sm pb-1 <%= day_color %>"><%= %w(日 月 火 水 木 金 土)[date.wday] %></div>
+                        <div class="<%= day_color %> text-base font-semibold "><%= date.day %></div>
+                      </div>
+                    </div>
+                  <% end %>
+                </div>
+              </div>
+            </div> <!-- /日付ヘッダ -->
+
+            <!-- ==== スケジュール部 ==== -->
+            <div class="flex flex-1 overflow-x-auto">
+              <!-- 左固定現場名 -->
+              <div class="flex-shrink-0" style="width:<%= genba_cell_width %>">
+                <div class="flex items-center text-gray-700 border-r border-gray-300" style="height:<%= schedule_height * 2 %>px;">佐賀バルーン駅</div>
+              </div>
+
+              <!-- スケジュール行列 -->
+              <div class="flex-1 flex flex-col">
+                <% 2.times do %>
+                  <div class="flex flex-1 min-h-[<%= schedule_height %>px] border-b border-gray-300 last:border-b-0">
+                    <% dates.each_with_index do |_, i| %>
+                      <div class="flex-1 min-w-0 border-gray-300 <%= 'border-r' unless i == dates.size - 1 %>"></div>
+                    <% end %>
+                  </div>
+                <% end %>
               </div>
             </div>
           </div>
