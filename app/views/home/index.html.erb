@@ -66,7 +66,7 @@
           </div>
 
           <div style="width: full">
-            <div class="relative z-0 pt-4 pl-4 flex flex-[1_1_auto] flex-col w-full min-w-0 overflow-hidden bg-white" alt="日付とレコードを仮に内包">
+            <div class="relative z-0 pt-4 pl-4 flex flex-[1_1_auto] flex-col w-full min-w-0 bg-white" alt="日付とレコードを仮に内包">
               <!-- 本体（表データ） -->
               <div class="relative flex flex-[1_1_auto] flex-col sticky overflow-y-auto scroll-smooth" alt="日付とレコードを内包">
                 
@@ -75,14 +75,14 @@
                 <div class="top-0 z-[5] flex" alt="日付列">
                   
                   <!-- 左固定の枠 -->
-                  <div class="relative z-[5] flex w-[<%= genba_cell_width %>] flex-shrink-0 overflow-hidden pointer-events-auto bg-[rgb(254.65,254.65,254.65)]">
+                  <div class="relative z-[5] flex flex-shrink-0 pointer-events-auto bg-[rgb(254.65,254.65,254.65)]" style="width: <%= genba_cell_width %>">
                     <div class="w-full flex-1 border-b border-r border-[rgb(203.65,203.65,203.65)]">
                     </div>
                   </div>
 
                   <!-- 横スクロールする月・日付枠 -->
-                  <div class="flex-1 overflow-x-auto">
-                    <div class="overflow-x-auto w-full">
+                  <div class="flex-1">
+                    <div class="w-full">
                       <!-- 月表示 -->
                       <% previous_month = nil %>
                       <% month_day_count = 0 %>
@@ -122,7 +122,7 @@
                       <div class="relative flex flex-[1_0_auto] flex-row bg-[rgb(254.65,254.65,254.65)]" alt="日付枠">
                         <% dates.each_with_index do |date, i| %>
                           <div class="flex-1 box-border">
-                            <div class="box-border overflow-hidden border-b <%= 'border-r' unless i == dates.size - 1 %> h-[<%= date_height %>] border-[rgb(203.65,203.65,203.65)] flex flex-col items-center justify-center">
+                            <div class="box-border border-b <%= 'border-r' unless i == dates.size - 1 %> h-[<%= date_height %>] border-[rgb(203.65,203.65,203.65)] flex flex-col items-center justify-center">
                               
                               <!-- 曜日 -->
                               <div class="text-sm text-gray-500 leading-none pb-1">
@@ -141,51 +141,30 @@
                       <div class="flex-none w-0"></div>
                     </div>
                   </div>
-
                 </div>
 
                 <div class="flex flex-[1_1_auto]">
-                  <div class="flex flex-[1_1_auto]">
-
-                    <div class="flex flex-[1_1_auto] box-border" alt="レコード枠">
-                      <div class="sticky absolute left-0 z-[5] overflow-visible flex flex-none" style="width: <%= genba_cell_width %>">
-                        <div class="flex-none w-0"></div>
-                          <div class="bg-[rgb(254.65,254.65,254.65)] flex-[1_1_auto]">
-                            <div class="bg-[rgb(254.65,254.65,254.65)] text-black border-r border-t-0 border-[rgb(203.65,203.65,203.65)] flex-[1_0_auto] text-gray-700" style="height: <%= schedule_height * 2 %>px">
-                              佐賀バルーン駅
-                            </div>
-                          </div>
-                      </div>
+                  <div style="width:<%= genba_cell_width %>;">
+                    <div class="flex items-center text-gray-700 border-r border-gray-300" style="height:<%= schedule_height * 2 %>px;">
+                      佐賀バルーン駅
                     </div>
+                  </div>
+                  <!-- スケジュール枠 -->
+                  <div class="flex flex-col" alt="現場毎の複数レコード列">
+                    <% 2.times do %>
 
-                    <div></div>
-                    <div class="invisible absolute top-0 left-0 right-0 h-0 overflow-hidden">
-                    </div>
-                    <!-- 横スクロールするスケジュール枠 -->
-                    <div class="flex flex-col" alt="現場毎の複数レコード列">
-                      <div class="overflow-clip relative flex flex-[1_0_auto]" style="width: <%= day_cells_width%>;" alt="複数レコード日付枠">
-                        <div class="min-h-[<%= schedule_height %>px] border-b border-[rgb(203.65,203.65,203.65)] flex flex-[1_0_auto]" alt="レコード毎">
-                          <div class="flex flex-[1_0_auto]">
-                            <% dates.length.times do |i| %>
-                            <div class="relative box-border min-w-0 flex flex-[1_0_0]" alt="1セル">
-                              <div class="flex-[1_1_auto] <%= 'border-r' unless i == days_in_month-1 %> border-[rgb(203.65,203.65,203.65)]"></div>
-                            </div>
-                            <% end %>
+                    <div class="flex flex-1" style="width: <%= day_cells_width%>;" alt="複数レコード日付枠">
+                      <div class="min-h-[<%= schedule_height %>px] border-b border-[rgb(203.65,203.65,203.65)] flex flex-[1_0_auto]" alt="レコード毎">
+                        <div class="flex flex-[1_0_auto]">
+                          <% dates.length.times do |i| %>
+                          <div class="relative box-border min-w-0 flex flex-[1_0_0]" alt="1セル">
+                            <div class="flex-[1_1_auto] <%= 'border-r' unless i == days_in_month-1 %> border-[rgb(203.65,203.65,203.65)]"></div>
                           </div>
-                        </div>
-                      </div>
-                      <div class="overflow-clip relative flex flex-[1_0_auto]" style="width: <%= day_cells_width%>;" alt="複数レコード日付枠">
-                        <div class="min-h-[<%= schedule_height %>px] border-[rgb(203.65,203.65,203.65)] flex flex-[1_0_auto]" alt="レコード毎">
-                          <div class="flex flex-[1_0_auto]">
-                            <% dates.length.times do |i| %>
-                            <div class="relative box-border min-w-0 flex flex-[1_0_0]" alt="1セル">
-                              <div class="flex-[1_1_auto] <%= 'border-r' unless i == days_in_month-1 %> border-[rgb(203.65,203.65,203.65)]"></div>
-                            </div>
-                            <% end %>
-                          </div>
+                          <% end %>
                         </div>
                       </div>
                     </div>
+                    <% end %>
                   </div>
                 </div>
               </div>
