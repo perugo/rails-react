@@ -3,7 +3,7 @@
 <% start_date = Date.new(2025, 2, 16) %>
 <% end_date   = Date.new(2025, 3, 17) %>
 <% dates = (start_date..end_date).to_a %>
-<% days_in_month = 30 %>
+<% days_in_month = dates.length %>
 <% day_cells_width_int = table_width_int - genba_cell_width_int %>
 <% day_cell_width_int = day_cells_width_int.to_f / days_in_month %>
 
@@ -65,100 +65,93 @@
             </div>
           </div>
 
-          <div style="width: full">
-            <div class="relative z-0 pt-4 pl-4 flex flex-[1_1_auto] flex-col w-full min-w-0 bg-white" alt="日付とレコードを仮に内包">
-              <!-- 本体（表データ） -->
-              <div class="relative flex flex-[1_1_auto] flex-col sticky overflow-y-auto scroll-smooth" alt="日付とレコードを内包">
+          <div class="relative z-0 pt-4 pl-4 flex flex-1 flex-col w-full bg-white" alt="日付とレコードを仮に内包">
+            <!-- 本体 -->
+            <div class="flex flex-1 flex-col" alt="日付とレコードを内包">
+              <div class="flex" alt="日付列">
                 
-                <div class="flex-none"></div>
-                
-                <div class="top-0 z-[5] flex" alt="日付列">
-                  
-                  <!-- 左固定の枠 -->
-                  <div class="relative z-[5] flex flex-shrink-0 pointer-events-auto bg-[rgb(254.65,254.65,254.65)]" style="width: <%= genba_cell_width %>">
-                    <div class="w-full flex-1 border-b border-r border-[rgb(203.65,203.65,203.65)]">
-                    </div>
-                  </div>
-
-                  <!-- 横スクロールする月・日付枠 -->
-                  <div class="flex-1">
-                    <div class="w-full">
-                      <!-- 月表示 -->
-                      <% previous_month = nil %>
-                      <% month_day_count = 0 %>
-                      <% month_widths = [] %>
-                      <% dates.each_with_index do |date, index| %>
-                        <% if previous_month.nil? %>
-                          <% previous_month = date.month %>
-                        <% end %>
-
-                        <% if date.month != previous_month %>
-                          <% month_width = day_cell_width_int * month_day_count %>
-                          <% month_widths << { year: date.year, month: previous_month, width: month_width } %>
-                          <% previous_month = date.month %>
-                          <% month_day_count = 0 %>
-                        <% end %>
-
-                        <% month_day_count += 1 %>
-
-                        <% if index == dates.size - 1 %> <%# 最終日だったら %>
-                          <% month_width = day_cell_width_int * month_day_count %>
-                          <% month_widths << { year: date.year, month: previous_month, width: month_width } %>
-                        <% end %>
-                      <% end %>
-
-                      <!-- 月表示DOM描画 -->
-                      <div class="flex box-border flex-[1_0_auto] w-full">
-                        <% month_widths.each_with_index do |mw, i| %>
-                          <% is_last = i == month_widths.size - 1 %>
-                          <% year_month_label = "#{mw[:year]}年#{mw[:month]}月" %>
-                          <div class="box-border border-b <%= is_last ? '' : 'border-r' %> border-[rgb(203.65,203.65,203.65)] text-left text-gray-500 pl-3"
-                              style="width: <%= mw[:width] %>px">
-                            <%= year_month_label %>
-                          </div>
-                        <% end %>
-                      </div>
-                      <!-- 日付枠 -->
-                      <div class="relative flex flex-[1_0_auto] flex-row bg-[rgb(254.65,254.65,254.65)]" alt="日付枠">
-                        <% dates.each_with_index do |date, i| %>
-                          <div class="flex-1 box-border">
-                            <div class="box-border border-b <%= 'border-r' unless i == dates.size - 1 %> h-[<%= date_height %>] border-[rgb(203.65,203.65,203.65)] flex flex-col items-center justify-center">
-                              
-                              <!-- 曜日 -->
-                              <div class="text-sm text-gray-500 leading-none pb-1">
-                                <%= %w(日 月 火 水 木 金 土)[date.wday] %>
-                              </div>
-                              
-                              <!-- 日付 -->
-                              <div class="text-base font-semibold text-lg leading-none">
-                                <%= date.day %>
-                              </div>
-
-                            </div>
-                          </div>
-                        <% end %>
-                      </div>
-                      <div class="flex-none w-0"></div>
-                    </div>
+                <!-- 左固定の枠 -->
+                <div class="flex flex-shrink-0 bg-[rgb(254.65,254.65,254.65)]" style="width: <%= genba_cell_width %>">
+                  <div class="flex-1 border-b border-r border-[rgb(203.65,203.65,203.65)]">
                   </div>
                 </div>
 
-                <div class="flex flex-[1_1_auto]">
-                  <div style="width:<%= genba_cell_width %>;">
-                    <div class="flex items-center text-gray-700 border-r border-gray-300" style="height:<%= schedule_height * 2 %>px;">
-                      佐賀バルーン駅
-                    </div>
-                  </div>
-                  <!-- スケジュール枠 -->
-                  <div class="flex flex-col" alt="現場毎の複数レコード列">
-                    <% 2.times do %>
-                      <div class="min-h-[<%= schedule_height %>px] last:border-b-0 border-b border-[rgb(203.65,203.65,203.65)] flex flex-1" style="width: <%= day_cells_width%>;" alt="レコード毎">
-                        <% dates.length.times do |i| %>
-                        <div class="flex flex-1 <%= 'border-r' unless i == days_in_month-1 %> border-[rgb(203.65,203.65,203.65)]" alt="1セル"></div>
-                        <% end %>
+                <!-- 横スクロールする月・日付枠 -->
+                <div class="w-full">
+                  <!-- 月表示 -->
+                  <% previous_month = nil %>
+                  <% month_day_count = 0 %>
+                  <% month_widths = [] %>
+                  <% dates.each_with_index do |date, index| %>
+                    <% if previous_month.nil? %>
+                      <% previous_month = date.month %>
+                    <% end %>
+
+                    <% if date.month != previous_month %>
+                      <% month_width = day_cell_width_int * month_day_count %>
+                      <% month_widths << { year: date.year, month: previous_month, width: month_width } %>
+                      <% previous_month = date.month %>
+                      <% month_day_count = 0 %>
+                    <% end %>
+
+                    <% month_day_count += 1 %>
+
+                    <% if index == dates.size - 1 %> <%# 最終日だったら %>
+                      <% month_width = day_cell_width_int * month_day_count %>
+                      <% month_widths << { year: date.year, month: previous_month, width: month_width } %>
+                    <% end %>
+                  <% end %>
+
+                  <!-- 月表示DOM描画 -->
+                    <div class="flex box-border flex-[1_0_auto] w-full">
+                    <% month_widths.each_with_index do |mw, i| %>
+                      <% is_last = i == month_widths.size - 1 %>
+                      <% year_month_label = "#{mw[:year]}年#{mw[:month]}月" %>
+                      <div class="box-border border-b <%= is_last ? '' : 'border-r' %> border-[rgb(203.65,203.65,203.65)] text-left text-gray-500 pl-3"
+                          style="width: <%= mw[:width] %>px">
+                        <%= year_month_label %>
                       </div>
                     <% end %>
                   </div>
+                  <!-- 日付枠 -->
+                  <div class="relative flex flex-row bg-[rgb(254.65,254.65,254.65)]" alt="日付枠">
+                    <% dates.each_with_index do |date, i| %>
+                      <div class="flex-1 box-border">
+                        <div class="box-border border-b <%= 'border-r' unless i == dates.size - 1 %> h-[<%= date_height %>] border-[rgb(203.65,203.65,203.65)] flex flex-col items-center justify-center">
+                          
+                          <!-- 曜日 -->
+                          <div class="text-sm text-gray-500 leading-none pb-1">
+                            <%= %w(日 月 火 水 木 金 土)[date.wday] %>
+                          </div>
+                          
+                          <!-- 日付 -->
+                          <div class="text-base font-semibold text-lg leading-none">
+                            <%= date.day %>
+                          </div>
+
+                        </div>
+                      </div>
+                    <% end %>
+                  </div>
+                  <div class="flex-none w-0"></div>
+                </div>
+              </div>
+
+              <div class="flex flex-[1_1_auto]">
+                <div class="flex-shrink-0" style="width:<%= genba_cell_width %>;">
+                  <div class="flex items-center text-gray-700 border-r border-gray-300" style="height:<%= schedule_height * 2 %>px;">
+                    佐賀バルーン駅
+                  </div>
+                </div>
+                <!-- スケジュール枠 -->
+                <div class="flex flex-col" alt="現場毎の複数レコード列">
+                  <% 2.times do %>
+                    <div class="min-h-[<%= schedule_height %>px] last:border-b-0 border-b border-[rgb(203.65,203.65,203.65)] flex flex-1" style="width: <%= day_cells_width%>;" alt="レコード毎">
+                      <% dates.length.times do |i| %>
+                      <div class="flex flex-1 <%= 'border-r' unless i == days_in_month-1 %> border-[rgb(203.65,203.65,203.65)]" alt="1セル"></div>
+                      <% end %>
+                    </div>
+                  <% end %>
                 </div>
               </div>
             </div>
