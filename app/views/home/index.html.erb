@@ -1,11 +1,10 @@
 <% table_width_int = 1390 %>
 <% genba_cell_width_int = 192 %>
-<% start_date = Date.new(2025, 2, 16) %>
-<% end_date   = Date.new(2025, 3, 17) %>
+<% start_date = Date.new(2024, 12, 16) %>
+<% end_date   = Date.new(2025, 1, 17) %>
 <% dates = (start_date..end_date).to_a %>
-<% days_in_month = dates.length %>
 <% day_cells_width_int = table_width_int - genba_cell_width_int %>
-<% day_cell_width_int = day_cells_width_int.to_f / days_in_month %>
+<% day_cell_width_int = day_cells_width_int.to_f / dates.length %>
 
 <% genba_cell_width = "#{genba_cell_width_int}px" %>
 <% day_cells_width = "#{day_cells_width_int}px" %>
@@ -148,7 +147,7 @@
                   <% 2.times do %>
                     <div class="min-h-[<%= schedule_height %>px] last:border-b-0 border-b border-[rgb(203.65,203.65,203.65)] flex flex-1" style="width: <%= day_cells_width%>;" alt="レコード毎">
                       <% dates.length.times do |i| %>
-                      <div class="flex flex-1 <%= 'border-r' unless i == days_in_month-1 %> border-[rgb(203.65,203.65,203.65)]" alt="1セル"></div>
+                      <div class="flex flex-1 <%= 'border-r' unless i == dates.length - 1 %> border-[rgb(203.65,203.65,203.65)]" alt="1セル"></div>
                       <% end %>
                     </div>
                   <% end %>
