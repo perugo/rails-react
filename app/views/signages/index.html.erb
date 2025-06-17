@@ -1,0 +1,31 @@
+<!-- filepath: /Users/noelgirard/lab/rails-react/app/views/signages/index.html.erb -->
+<div data-controller="signage">
+  <div data-signage-target="screen" id="screen-0" hidden></div>
+  <div data-signage-target="screen" id="screen-1" hidden></div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    // ページを開いた際に signages/enable を叩く
+    await fetch("<%= enable_signage_path %>", { method: "GET", headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+
+    const urls = [
+      "/alerts",
+      "/"
+    ];
+    for (let i = 0; i < urls.length; i++) {
+      const res = await fetch(urls[i], { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+      const html = await res.text();
+      document.getElementById(`screen-${i}`).innerHTML = html;
+    }
+
+    // スライドショー終了ボタンのイベントリスナー
+    const stopButton = document.getElementById("stop-slideshow");
+    if (stopButton) {
+      stopButton.addEventListener("click", async () => {
+        alert("スライドショーを終了しました");
+        window.location.href = "/"; // ルートページに遷移
+      });
+    }
+  });
+</script>
