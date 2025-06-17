@@ -1,0 +1,52 @@
+<div data-controller="signage" data-is-signage= <%= @is_signage =%>>
+  <div data-signage-target="screen" id="screen-0" hidden>
+    <iframe style="width: 100%; height: 100%; border: none;"></iframe>
+  </div>
+  <div data-signage-target="screen" id="screen-1" hidden>
+    <iframe style="width: 100%; height: 100%; border: none;"></iframe>
+  </div>
+
+  <% if !@is_signage %>
+    <a href="#" data-action="signage#enableSlideshow" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; text-decoration: none; cursor: pointer;">
+      スライドショーを開始
+    </a>
+  <% end %>
+</div>
+
+<p>さるねーじ アクション内 <%= @is_signage %></p>
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    console.log("Signage script loaded");
+
+    const screens = document.querySelectorAll("[data-signage-target='screen']");
+    const urls = ["/alerts", "/"];
+    let currentIndex = 0;
+
+    const fetchAndShowScreen = async (index) => {
+      try {
+        const res = await fetch(urls[index], { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+        const html = await res.text();
+        const iframe = screens[index].querySelector("iframe");
+        iframe.srcdoc = html;
+        screens.forEach((screen, i) => {
+          screen.hidden = i !== index;
+        });
+      } catch (error) {
+        console.error(`Failed to fetch data for screen ${index}:`, error);
+      }
+    };
+
+    setInterval(async () => {
+      const signageElement = document.querySelector("[data-controller='signage']");
+      console.log(signageElement)
+      const isSignage = signageElement.getAttribute("data-is-signage") === "true";
+      if (!isSignage) {
+        console.log("スライドショーは無効です。処理を終了します。");
+        return;
+      }
+
+      currentIndex = (currentIndex + 1) % urls.length;
+      await fetchAndShowScreen(currentIndex);
+    }, 4000);
+  });
+</script>
