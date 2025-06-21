@@ -8,10 +8,7 @@ Things you may want to cover:
 * Ruby version
 
 実行手順
-- bundle install 
-- yarn install
-- create database
-- migrationを実行
+- bin/vite dev
 
 ### viteでCSS/js処理を行っています
 - bundle exec rails s
