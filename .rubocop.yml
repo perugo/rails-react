@@ -8,10 +8,12 @@ AllCops:
   TargetRubyVersion: 3.4.2
   NewCops: enable
   Exclude:
+    - "app/views/**/*"
     - "bin/*"
     - "config/**/*"
     - "db/schema.rb"
     - "db/migrate/*"
+    - "node_modules/**/*"
     - "log/**/*"
     - "public/**/*"
     - "storage/**/*"
@@ -53,3 +55,11 @@ Metrics/MethodLength:
   CountAsOne:
     - hash
     - array
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/ExampleLength:
+  CountAsOne:
+    - array
+    - hash
