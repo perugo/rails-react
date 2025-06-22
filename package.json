@@ -1,11 +1,22 @@
 {
   "private": true,
   "type": "module",
+  "scripts": {
+    "preview": "vite preview",
+    "format": "prettier --write app/frontend",
+    "format-check": "prettier --check app/frontend",
+    "format-erb": "prettier --write app/views",
+    "format-erb-check": "prettier --check app/views"
+  },
   "devDependencies": {
+    "@4az/prettier-plugin-html-erb": "^0.0.7",
+    "@prettier/plugin-ruby": "^4.0.4",
     "@tailwindcss/vite": "^4.1.4",
     "@vitejs/plugin-react": "^4.4.0",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.3",
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.13",
     "tailwindcss": "^4.1.4",
     "vite": "^5.4.15",
     "vite-plugin-ruby": "^5.1.1"
