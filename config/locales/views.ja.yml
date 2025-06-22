@@ -1,0 +1,13 @@
+ja:
+  date:
+    formats:
+      default: "%Y/%m/%d"
+      long: "%Y/%m/%d %H:%M:%S"
+      only_mday: "%m/%d"
+      only_wday: "%a"
+  time:
+    formats:
+      default: "%Y/%m/%d"
+      long: "%Y/%m/%d %H:%M:%S"
+      only_hm: "%H:%M"
+      only_mday_j: "%m月%d日"
