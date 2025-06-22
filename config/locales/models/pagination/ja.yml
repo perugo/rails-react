@@ -1,0 +1,13 @@
+ja:
+  views:
+    pagination:
+      previous: "‹"
+      next: "›"
+      truncate: "..."
+  helpers:
+    page_entries_info:
+      more_pages:
+        display_entries: "全 %{total}件中 %{first}件-%{last}件を表示"
+      one_page:
+        display_entries:
+          other: "全 %{count}件"
