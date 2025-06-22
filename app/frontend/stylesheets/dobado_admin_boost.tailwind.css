@@ -18,7 +18,7 @@
   }
 
   .subtitle {
-    color: color-mix(in oklab, var(--color-base-content) 50%, transparent)
+    color: color-mix(in oklab, var(--color-base-content) 50%, transparent);
   }
 
   .card {
