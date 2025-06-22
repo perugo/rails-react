@@ -25,6 +25,7 @@
     "@hotwired/stimulus": "^3.2.2",
     "daisyui": "^5.0.43",
     "flowbite": "^3.1.2",
-    "flowbite-react": "^0.11.7"
+    "flowbite-react": "^0.11.7",
+    "typescript": "^5.8.3"
   }
 }
