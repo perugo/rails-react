@@ -1,0 +1,21 @@
+pre-push:
+  jobs:
+    - name: rspec
+      glob: "**/*_spec.rb"
+      run: bundle exec rspec --tag ~type:system --tag ~type:features
+
+pre-commit:
+  parallel: true
+  jobs:
+    - name: rubocop
+      glob: "{Gemfile,**/*.rb}"
+      exclude: '(^|/)(application|routes)\.rb$'
+      run: bundle exec rubocop --parallel
+
+    - name: format-ts-files
+      glob: "**/*.{ts,tsx}"
+      run: npm run format-check
+
+    - name: erb_lint
+      glob: "**/*.erb"
+      run: npm run format-erb-check

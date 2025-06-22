@@ -12,6 +12,10 @@ gem 'draper'
 gem 'kaminari'
 gem 'turbo-rails'
 
+group :development do
+  gem 'lefthook', require: false
+end
+
 group :development, :test do
   gem 'factory_bot_rails'
   gem 'rubocop', require: false
