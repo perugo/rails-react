@@ -1,0 +1,25 @@
+.flatpickr-calendar {
+  .dayContainer .flatpickr-day,
+  .flatpickr-time .numInputWrapper input,
+  .flatpickr-time .flatpickr-time-separator {
+    font-size: 22px;
+    font-weight: normal;
+  }
+  .flatpickr-days {
+    .dayContainer {
+      .selected {
+        background: #14126f;
+        border-color: #14126f;
+      }
+    }
+  }
+}
+
+.form-control.flatpickr-input[readonly]:not(:disabled) {
+  background-color: inherit;
+}
+
+.custom-calendar-position {
+  right: 20px !important;
+  position: absolute !important;
+}

@@ -6,3 +6,5 @@
 
 @import "../stylesheets/application.tailwind.css";
 @import "../stylesheets/dobado_admin_boost.tailwind.css";
+@import "flatpickr/dist/flatpickr.min.css";
+@import "../stylesheets/common/flatpickr";
