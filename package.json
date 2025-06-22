@@ -1,6 +1,13 @@
 {
   "private": true,
   "type": "module",
+  "scripts": {
+    "preview": "vite preview",
+    "format": "prettier --write app/frontend",
+    "format-check": "prettier --check app/frontend",
+    "format-erb": "prettier --write app/views",
+    "format-erb-check": "prettier --check app/views"
+  },
   "devDependencies": {
     "@4az/prettier-plugin-html-erb": "^0.0.7",
     "@prettier/plugin-ruby": "^4.0.4",
