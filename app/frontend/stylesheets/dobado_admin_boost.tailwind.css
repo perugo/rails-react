@@ -1,0 +1,32 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+@layer utilities {
+  .card-body {
+    --card-fs: var(--text-base);
+  }
+
+  .checkbox {
+    --radius-selector: var(--radius-sm);
+  }
+}
+
+@layer components {
+  .title {
+    font-size: var(--text-2xl);
+    font-weight: bold;
+  }
+
+  .subtitle {
+    color: color-mix(in oklab, var(--color-base-content) 50%, transparent)
+  }
+
+  .card {
+    background-color: var(--color-base-100);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .fieldset-legend {
+    font-size: var(--text-sm);
+  }
+}
