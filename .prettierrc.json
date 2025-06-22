@@ -1,0 +1,8 @@
+{
+  "plugins": [
+    "@prettier/plugin-ruby",
+    "@4az/prettier-plugin-html-erb",
+    "prettier-plugin-tailwindcss"
+  ],
+  "printWidth": 130
+}
