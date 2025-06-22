@@ -8,6 +8,7 @@ gem 'vite_rails', '~> 3.0', '>= 3.0.17'
 
 gem 'tzinfo-data', platforms: %i[windows jruby]
 
+gem 'draper'
 gem 'turbo-rails'
 
 group :development, :test do
