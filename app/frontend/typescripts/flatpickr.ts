@@ -4,7 +4,7 @@ import { Japanese } from "flatpickr/dist/l10n/ja.js";
 const apply = () => {
   flatpickr(".flatpickr", {
     allowInput: true,
-    locale: Japanese
+    locale: Japanese,
   });
 };
 
