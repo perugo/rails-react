@@ -1,0 +1,15 @@
+<header style="background-color: #f8f9fa; padding: 1rem; text-align: center; border-bottom: 1px solid #ddd;">
+  <nav>
+    <a href="/" style="margin: 0 10px; padding: 0.5rem 1rem; background-color: #007bff; color: white; border: none; border-radius: 5px; text-decoration: none; cursor: pointer;">
+      ホーム画面
+    </a>
+    <a href="/alerts" style="margin: 0 10px; padding: 0.5rem 1rem; background-color: #28a745; color: white; border: none; border-radius: 5px; text-decoration: none; cursor: pointer;">
+      警告一覧
+    </a>
+    <% if @is_signage %>
+    <a href="<%= disable_signage_path %>" style="margin: 0 10px; padding: 0.5rem 1rem; background-color: #28a745; color: white; border: none; border-radius: 5px; text-decoration: none; cursor: pointer;">
+      スライドショーを終了
+    </a>
+  <% end %>
+  </nav>
+</header>

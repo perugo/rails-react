@@ -22,7 +22,9 @@
     <%= vite_stylesheet_tag 'application' %>
     <%= vite_javascript_tag "application" %>
   </head>
-
+  <% unless @is_signage && controller.controller_name != "signages" %>
+    <%= render partial: "layouts/header" %>
+  <% end %>
   <body>
     <%= yield %>
   </body>
